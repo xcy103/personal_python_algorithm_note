@@ -1,101 +1,79 @@
+# 这道题考察并查集以及线段树的down操作
+# 最后只查询一次，查线段树最后有多少个不同颜色
+
 import sys
 
-# 增加递归深度上限
-sys.setrecursionlimit(200000)
+n,m = map(int,sys.stdin.readline().split())
 
-def solve():
-    # 使用快速读取所有数据
-    input_data = sys.stdin.read().split()
-    if not input_data:
+pl = [0]*m
+pr = [0]*m
+coords = [n]
+
+for i in range(m):
+    pl[i],pr[i] = map(int,sys.stdin.readline().split())
+    coords.append(pl[i])
+    coords.append(pr[i])
+
+
+coords.sort()
+
+
+unique_coords = []
+unique_coords.append(coords[0])
+for i in range(1, len(coords)):
+    if coords[i] != coords[i-1]:
+        unique_coords.append(coords[i])
+
+all_points = []
+all_points.append(unique_coords[0])
+for i in range(1, len(unique_coords)):
+    if unique_coords[i] - unique_coords[i-1] > 1:
+        all_points.append(unique_coords[i-1] + 1)
+    all_points.append(unique_coords[i])
+all_points.sort()
+
+val_to_rank = {val:i+1 for i,val in enumerate(all_points)}
+size = len(all_points)
+
+tree_poster = [0]*(size<<2)
+
+def down(i):
+    if tree_poster[i] != 0:
+        tree_poster[i << 1] = tree_poster[i]
+        tree_poster[i << 1 | 1] = tree_poster[i]
+        tree_poster[i] = 0
+
+def update(jobl, jobr, jobv, l, r, i):
+    if jobl <= l and r <= jobr:
+        tree_poster[i] = jobv
         return
+    down(i)
+    mid = (l+r)>>1
+    if jobl <= mid:
+            update(jobl, jobr, jobv, l, mid, i << 1)
+    if jobr > mid:
+        update(jobl, jobr, jobv, mid + 1, r, i << 1 | 1)
     
-    ptr = 0
-    n = int(input_data[ptr])
-    m = int(input_data[ptr+1])
-    ptr += 2
-    
-    arr = [0] * (n + 1)
-    for i in range(1, n + 1):
-        arr[i] = int(input_data[ptr])
-        ptr += 1
-    
-    tree_sum = [0]*(n<<2)
-    tree_max = [0]*(n<<2)
+visited = [False] * (m + 1)
+visible_count = 0
+def query(l,r,i):
+    if tree_poster[i] != 0:
+        p_id = tree_poster[i]
+        global visible_count
+        if not visited[p_id]:
+            visited[p_id] = True
+            visible_count += 1
+        return
+    if l==r:
+        return 
+    down(i)
+    mid = (l + r) >> 1
+    query(l, mid, i << 1)
+    query(mid + 1, r, i << 1 | 1)
 
-    def up(i):
-        tree_sum[i] = tree_sum[i << 1] + tree_sum[i << 1 | 1]
-        tree_max[i] = max(tree_max[i << 1], tree_max[i << 1 | 1])
-    
-    def build(l,r,i):
-        if l == r:
-            tree_sum[i] = tree_max[i] = arr[l]
-            return
-        mid = (l + r) >> 1
-        build(l, mid, i << 1)
-        build(mid + 1, r, i << 1 | 1)
-        up(i)
-    
-    def query(jobl,jobr,l,r,i):
-        if jobl <= l and r <= jobr:
-            return tree_sum[i]
-        mid = (l + r) >> 1
-        ans = 0
-        if jobl <= mid:
-            ans += query(jobl, jobr, l, mid, i << 1)
-        if jobr > mid:
-            ans += query(jobl, jobr, mid + 1, r, i << 1 | 1)
-        return ans
+for i in range(m):
+        update(val_to_rank[pl[i]], val_to_rank[pr[i]], i+1, 1, size, 1)
 
-    def mod(jobl,jobr,jobv,l,r,i):
-        if jobv > tree_max[i]:
-            return
-        if l == r:
-            tree_sum[i] %= jobv
-            tree_max[i] %= jobv
-            return
-        mid = (l + r) >> 1
-        if jobl <= mid:
-            mod(jobl, jobr, jobv, l, mid, i << 1)
-        if jobr > mid:
-            mod(jobl, jobr, jobv, mid + 1, r, i << 1 | 1)
-        up(i)
+query(1, size, 1)
     
-    def update(jobi, jobv, l, r, i):
-        if l == r:
-            tree_sum[i] = tree_max[i] = jobv
-            return
-        mid = (l + r) >> 1
-        if jobi <= mid:
-            update(jobi, jobv, l, mid, i << 1)
-        else:
-            update(jobi, jobv, mid + 1, r, i << 1 | 1)
-        up(i)
-
-# 初始化线段树
-    build(1, n, 1)
-    
-    results = []
-    for _ in range(m):
-        op = int(input_data[ptr])
-        if op == 1:
-            l = int(input_data[ptr+1])
-            r = int(input_data[ptr+2])
-            results.append(str(query(l, r, 1, n, 1)))
-            ptr += 3
-        elif op == 2:
-            l = int(input_data[ptr+1])
-            r = int(input_data[ptr+2])
-            x = int(input_data[ptr+3])
-            mod(l, r, x, 1, n, 1)
-            ptr += 4
-        else:
-            k = int(input_data[ptr+1])
-            x = int(input_data[ptr+2])
-            update(k, x, 1, n, 1)
-            ptr += 3
-            
-    # 输出结果
-    sys.stdout.write("\n".join(results) + "\n")
-
-if __name__ == "__main__":
-    solve()
+sys.stdout.write(str(visible_count) + "\n")
