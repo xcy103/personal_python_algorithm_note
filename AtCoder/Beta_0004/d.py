@@ -1,6 +1,6 @@
 #https://atcoder.jp/contests/awc0004/tasks/awc0004_d
 #贪心+优先队列
-
+# 好题一道啊
 import heapq
 import sys
 

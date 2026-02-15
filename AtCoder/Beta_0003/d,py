@@ -1,0 +1,25 @@
+# 带限制的滑动窗口，要求窗口长度必须大于k
+# 我这里l最后落在了第一个不满足窗口和条件的下标
+# 然后就开始加工出答案吧
+import sys
+
+
+n,k,m = map(int,sys.stdin.readline().split())
+
+arr = list(map(int,sys.stdin.readline().split()))
+
+l = 0
+r = 0
+
+s = 0
+op = 0
+while r<n:
+    s+=arr[r]
+    while s>=m:
+        s-=arr[l]
+        l+=1
+    op+=max(0,l if r-l+2>=k else r-k+2)
+    r+=1
+
+print(op)
+
