@@ -1,54 +1,51 @@
-## 算法竞赛知识大纲
+## Competitive Programming Knowledge Outline
 
-~~### 基础阶段 (难度 1-3)~~
+~~### Fundamental Stage (Difficulty 1–3)~~
 
-* ~~**枚举与模拟**：基础枚举、模拟逻辑实现~~
-* ~~**排序基础**：冒泡排序、选择排序、插入排序~~
-* ~~**数据结构**：栈、队列、链表~~
-* ~~**数学**：高精度算法（加减乘除）~~
+* ~~**Enumeration & Simulation**: Basic enumeration, simulation logic implementation~~  
+* ~~**Sorting Basics**: Bubble sort, selection sort, insertion sort~~  
+* ~~**Data Structures**: Stack, queue, linked list~~  
+* ~~**Mathematics**: High-precision arithmetic (addition, subtraction, multiplication, division)~~
 
-~~### 进阶阶段 (难度 4-5)~~
+~~### Intermediate Stage (Difficulty 4–5)~~
 
-* ~~**搜索基础**：BFS（广度优先）、DFS（深度优先）~~
-* ~~**效率算法**：贪心策略、二分查找/二分答案~~
-* ~~**动态规划**：基础一维 DP~~
-* ~~**初等数论**：质数、约数、余数、最大公约数~~
+* ~~**Search Basics**: BFS (Breadth-First Search), DFS (Depth-First Search)~~  
+* ~~**Efficiency Techniques**: Greedy strategies, binary search / binary search on answer~~  
+* ~~**Dynamic Programming**: Basic 1D DP~~  
+* ~~**Elementary Number Theory**: Primes, divisors, remainders, greatest common divisor~~
 
-~~### 提高阶段 (难度 4-6)~~
+~~### Advanced Stage (Difficulty 4–6)~~
 
-* ~~**高级排序**：归并排序、快速排序、堆排序、桶排序、基数排序~~
-* ~~**搜索进阶**：~~
-    * ~~剪枝优化、记忆化搜索~~
-    * ~~双向 BFS、迭代加深搜索~~
-    * ~~启发式搜索 ($A^*$)~~
-* ~~**动态规划专题**：~~
-    * ~~背包 DP、树形 DP~~
-    * ~~状压 DP、数位 DP~~
-* ~~**字符串**：哈希 (Hash)、KMP、Manacher~~
-* **数学进阶**：排列组合、二项式定理、模逆元
+* ~~**Advanced Sorting**: Merge sort, quicksort, heap sort, bucket sort, radix sort~~  
+* ~~**Advanced Search**:~~  
+  * ~~Pruning optimization, memoized search~~  
+  * ~~Bidirectional BFS, iterative deepening search~~  
+  * ~~Heuristic search ($A^*$)~~  
+* ~~**Dynamic Programming Topics**:~~  
+  * ~~Knapsack DP, tree DP~~  
+  * ~~State compression DP, digit DP~~  
+* ~~**Strings**: Hashing, KMP, Manacher~~  
+* **Advanced Mathematics**: Permutations & combinations, binomial theorem, modular inverse  
 
-### 核心/高级阶段 (难度 5-7)
+### Core / Advanced Stage (Difficulty 5–7)
 
-* **图论专题**：
-* 最小生成树 (Kruskal, Prim)
-* 最短路 (Dijkstra, SPFA, Floyd)
-* 拓扑排序、差分约束
-* 连通性 (割点、桥、强连通分量)
-* 二分图匹配、欧拉回路
-* LCA (最近公共祖先)、DFS 序
+* **Graph Theory**:  
+  * Minimum Spanning Tree (Kruskal, Prim)  
+  * Shortest Path (Dijkstra, SPFA, Floyd)  
+  * Topological sort, difference constraints  
+  * Connectivity (articulation points, bridges, strongly connected components)  
+  * Bipartite matching, Eulerian path/circuit  
+  * LCA (Lowest Common Ancestor), DFS order  
 
+* **Advanced Data Structures**:  
+  * Union-Find (Disjoint Set), heap (priority queue)  
+  * Sparse Table (RMQ), Fenwick Tree (Binary Indexed Tree)  
+  * Segment Tree  
+  * Trie, balanced trees (using standard library implementations)  
 
-* **高级数据结构**：
-* 并查集、堆 (Priority Queue)
-* ST 表 (RMQ)、树状数组
-* 线段树 (Segment Tree)
-* Trie 树 (字典树)、平衡树 (系统库实现)
+### Elite / Comprehensive Stage (Difficulty 6–7+)
 
-
-
-### 顶尖/综合阶段 (难度 6-7+)
-
-* **数学专题**：容斥原理、矩阵运算/加速、高斯消元
-* **优化专题**：DP 常见优化（斜率优化、四边形不等式）
-* **计算几何**：基础位置判定、点线面关系
-* **综合博弈**：概率论、博弈论基础
+* **Mathematics Topics**: Inclusion-exclusion principle, matrix operations/acceleration, Gaussian elimination  
+* **Optimization Topics**: Common DP optimizations (slope optimization, quadrangle inequality)  
+* **Computational Geometry**: Basic positional relationships, point-line-plane relations  
+* **Game Theory & Probability**: Basic probability theory, game theory fundamentals  
