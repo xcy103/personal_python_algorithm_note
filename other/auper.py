@@ -9,10 +9,13 @@ r = max(arr)+1
 t = sum(arr)
 while l+1 < r:
     mid = (l+r)//2
-    s = mid*k+mid
-    if s >= t:
-        r = mid
-    else:
+    cnt = 0
+    for x in arr:
+        if x>mid:
+            cnt+=(x+k-1)//k
+    if cnt > mid:
         l = mid
+    else:
+        r = mid
 
-print(r)
+print(l)
