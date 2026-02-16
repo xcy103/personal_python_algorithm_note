@@ -9,13 +9,13 @@ def up(i):
     bs[i] = bs[i << 1] + bs[i << 1 | 1]
     be[i] = be[i << 1] + be[i << 1 | 1]
 
-def build(l,r,i):
-    if l < r:
-        mid = (l + r) >> 1
-        build(l, mid, i << 1)
-        build(mid + 1, r, i << 1 | 1)
-    bs[i] = 0
-    be[i] = 0
+# def build(l,r,i):
+#     if l < r:
+#         mid = (l + r) >> 1
+#         build(l, mid, i << 1)
+#         build(mid + 1, r, i << 1 | 1)
+#     bs[i] = 0
+#     be[i] = 0
 
 def add(jobt, jobi, l, r, i):
     if l == r:

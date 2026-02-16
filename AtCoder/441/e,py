@@ -1,0 +1,32 @@
+# 这道题需要一些转化，就是从i到j，这一段字符串上A的数量需要大于B的数量
+# 也就是Aj - Ai-1 > Bj - Bi-1，即 Aj - Bj > Ai-1 - Bi-1
+# 我们可以定义一个数列，Di = Ai - Bi， D0也就是0
+# 只要找出Di>Dj（i>j）的对数，
+# 我们可以统计频率，其实本质就是，从小到大，频率之和
+# 
+
+#
+import sys
+
+t = int(sys.stdin.readline().strip())
+s = sys.stdin.readline().strip()
+n = len(s)
+count = [0]*(2*n+1)
+
+d = n
+count[d] = 1
+cur = 0
+ans = 0
+for ch in s:
+    if ch=='A':
+        cur+=count[d]
+        d+=1
+    elif ch=='B':
+        d-=1
+        cur-=count[d]
+    else:
+        pass
+    count[d]+=1
+    ans+=cur
+
+print(ans)

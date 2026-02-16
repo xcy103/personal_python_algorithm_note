@@ -15,9 +15,9 @@ def lazy(i,v,n):
 
 def down(i,ln,rn):
     if add_tree[i]:
-        lazy(i << 1, add_tag[i], ln)
-        lazy(i << 1 | 1, add_tag[i], rn)
-        add_tag[i] = 0
+        lazy(i << 1, add_tree[i], ln)
+        lazy(i << 1 | 1, add_tree[i], rn)
+        add_tree[i] = 0
 
 def build(l,r,i):
     add_tree[i] = 0
@@ -56,7 +56,7 @@ def query(jobl,jobr,jobv,l,r,i):
 n,m = map(int,sys.stdin.readline().split())
 arr = list(map(int,sys.stdin.readline().split()))
 diff[0] = arr[0]
-for i in range(1,n-1):
+for i in range(1,n):
     diff[i] = arr[i] - arr[i-1]
 out = []
 for _ in range(m):
@@ -64,7 +64,7 @@ for _ in range(m):
     if len(ops)==5:
         jobl,jobr = ops[1],ops[2]
         k,d = ops[3],ops[4]
-        e = k + (r-l)*d
+        e = k + (jobr-jobl)*d
         update(jobl, jobl, k, 1, n, 1)
         if jobl+1<=jobr:
             update(jobl+1, jobr, d, 1, n, 1)

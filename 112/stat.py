@@ -17,8 +17,9 @@ def solve():
         sum2[i] = sum2[i<<1] + sum2[i<<1|1]
     
     def lazy(i,v,n):
-        sum1[i] += v * n
+        
         sum2[i] += sum1[i] * v * 2 + v * v * n
+        sum1[i] += v * n
         addv[i] += v
     
     def down(i,ln,rn):
@@ -73,7 +74,7 @@ def solve():
             jobt,jobl,jobr = ops[0],ops[1],ops[2]
             size = jobr - jobl + 1
             if jobt==2:
-                results.append(query(2,jobl,jobr,1,n,1))
+                results.append(query(2,jobl,jobr,1,n,1)/size)
             else:
                 s1 = query(2,jobl,jobr,1,n,1)
                 s2 = query(3,jobl,jobr,1,n,1)
