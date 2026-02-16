@@ -50,4 +50,5 @@ void solve() {
 
 int main() {
     // 提高 I/O 效率
-    ios::sync_with_stdio 
+    ios::sync_with_stdio(false);
+}
