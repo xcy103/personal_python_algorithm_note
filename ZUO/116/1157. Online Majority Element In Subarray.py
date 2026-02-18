@@ -2,7 +2,7 @@ from collections import defaultdict
 from bisect import bisect_left, bisect_right
 from typing import List
 # 先用线段树维护水王信息，然后选出候选人，再用二分判断是否符合标准
-
+# 摩尔投票与线段树结合，关键还是维护线段树的信息
 class MajorityChecker:
 
     def __init__(self, arr: List[int]):
