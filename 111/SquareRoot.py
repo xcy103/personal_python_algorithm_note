@@ -41,9 +41,9 @@ def solve():
         
         mid = (l+r)>>1
         if jobl <= mid:
-            update_sqrt(jobl, jobr, l, mid, i << 1)
+            update(jobl, jobr, l, mid, i << 1)
         if jobr > mid:
-            update_sqrt(jobl, jobr, mid + 1, r, i << 1 | 1)
+            update(jobl, jobr, mid + 1, r, i << 1 | 1)
         up(i)
     
     def query(jobl, jobr, l, r, i):
@@ -65,7 +65,7 @@ def solve():
         if l > r:
             l, r = r, l
         if op==0:
-            update_sqrt(l, r, 1, n, 1)
+            update(l, r, 1, n, 1)
         else:
             results.append(str(query(l, r, 1, n, 1)))
     
