@@ -24,6 +24,7 @@ def find(x):
         father[x] = find(father[x])
     return father[x]
 
+#短短的核心代码
 def tarjan(u,parent):
     vis[u] = True
     for v in g[u]:
@@ -32,9 +33,9 @@ def tarjan(u,parent):
         tarjan(v,u)
         father[v] = u
     
-    for v,idx in queries[u]:
-        if vis[v]:
-            ans[idx] = find(v)
+    for node,idx in queries[u]:
+        if vis[node]:
+            ans[idx] = find(node)
 
 def build(n):
     global g,queries,vis,father,ans
@@ -50,4 +51,4 @@ def add_edge(u,v):
 def add_query(u,v,idx):
     queries[u].append((v,idx))
     queries[v].append((u,idx))
-    
+
