@@ -1,12 +1,16 @@
-MOD = 10**9+7
-k = 10
-l = r = 5
-s = (r-l+1)*(r+l)//2
-if r-l+1==1:
-    one = s
-else:one = (k-1)*(r-l+1)*s%MOD
-res = 0
-for i in range(0,k,2):
-    res = (res*10 + one)%MOD
-    res = (res*10 + one)%MOD
-print(res)
+g = [[7,9,8]]
+m,n = len(g),len(g[0])
+ans = 0
+for k in range(3,-1,-1):
+    t = 1
+    for i in range(m):
+        f = 0
+        for j in range(n):
+            if (g[i][j])|(ans)<=ans:
+                f = 1
+                break
+        if f==0:
+            t = 0
+    if t==0:
+        ans|=1<<k
+print( ans)
