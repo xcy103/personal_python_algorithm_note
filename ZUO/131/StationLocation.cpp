@@ -1,5 +1,5 @@
-//这道题是知识点大杂烩
-//首先是补充虚拟村庄，链式前向星，二分
+//知识点大杂烩
+//补充虚拟村庄，链式前向星，二分
 #include<bits/stdc++.h>
 #define ll long long
 using namespace std;
@@ -20,8 +20,8 @@ int to[MAXN];
 int cnt;
 
 //线段树
-ll int min_tree[MAXN];
-ll int add[MAXN];
+ll int min_tree[MAXN<<2];
+ll int add[MAXN<<2];
 
 //dp数组
 ll dp[MAXN];
@@ -31,7 +31,7 @@ void up(int i){
 
 }
 
-void lazy(int i,int v){
+void lazy(int i,ll v){
     min_tree[i]+=v;
     add[i]+=v;
 }
@@ -55,7 +55,7 @@ void build(int l,int r,int i){
     }
 }
 
-void uodate(int jobl,int jobr,ll jobv,int l,int r,int i){
+void update(int jobl,int jobr,ll jobv,int l,int r,int i){
     if(jobl<=l&&r<=jobr){
         lazy(i,jobv);
     }
@@ -63,10 +63,10 @@ void uodate(int jobl,int jobr,ll jobv,int l,int r,int i){
         down(i);
         int mid = (l+r)>>1;
         if (jobl<=mid){
-            uodate(jobl,jobr,jobv,l,mid,i<<1);
+            update(jobl,jobr,jobv,l,mid,i<<1);
         }
         if (jobr>mid){
-            uodate(jobl,jobr,jobv,mid+1,r,i<<1|1);
+            update(jobl,jobr,jobv,mid+1,r,i<<1|1);
         }
         up(i);
     }
@@ -77,7 +77,7 @@ ll query(int jobl,int jobr,int l,int r,int i){
     }
     down(i);
     int mid = (l+r)>>1;
-    ll ans = LLONG_MIN;
+    ll ans = LLONG_MAX;
     if (jobl<=mid){
         ans = query(jobl,jobr,l,mid,i<<1);
     }
@@ -138,7 +138,7 @@ ll compute(){
             for(int ei = head[i];ei;ei=nxt[ei]){
                 int uncover = to[ei];
                 if(leftv[uncover]>1){
-                    uodate(1,leftv[uncover]+1,
+                    update(1,leftv[uncover]-1,
                     warranty[uncover],1,n,1);
                 }
             }
