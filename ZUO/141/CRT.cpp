@@ -1,3 +1,4 @@
+//中国剩余定理基础模板，需要满足m1-mn两两互质
 #include<bits/stdc++.h>
 using namespace std;
 #define ll long long
