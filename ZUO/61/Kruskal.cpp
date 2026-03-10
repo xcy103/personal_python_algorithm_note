@@ -1,5 +1,6 @@
 //kruskal算法，不需要建图，最小堆和并查集
-//注意这里的定义边的方式
+//注意这里的边的定义方式
+// 时间复杂度O(m * log m) + O(n + m)
 #include<bits/stdc++.h>
 using namespace std;
 
