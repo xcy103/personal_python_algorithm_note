@@ -32,3 +32,26 @@ def gauss(mat,n):
                 mat[j][k]-=rate*mat[i][k]
     return True
 
+#形式为n*(n+1)
+def Gauss(mat,n):
+    for i in range(n):
+        max_row = i
+        for j in range(i+1,n):
+            if abs(mat[j][i])>abs(mat[max_row][i]):
+                max_row = j
+        
+        mat[i],mat[max_row] = mat[max_row],mat[i]
+        if abs(mat[i][i])<sml:
+            return False
+        
+        pivot = mat[i][i]
+        for j in range(i,n+1):
+            mat[i][j]/=pivot
+        
+        for j in range(n):
+            if j==i: continue
+            rate = mat[j][i]
+            for k in range(i,n+1):
+                mat[j][k]-=rate*mat[i][k]
+    
+    return True
