@@ -1,54 +1,48 @@
-#include <bits/stdc++.h>
+//普通消元，低位插入的向量并不会让高位的基向量对应的位
+//上的1消除为0，所以当我们用普通消元得到一组基向量，我们需要从高
+//向低遍历得到最大xor值
+#include<bits/stdc++.h>
 using namespace std;
-
-// 最大异或和
-// 线性基模板
-// n <= 50
-// arr[i] <= 2^50
-
+using ll = long long;
 const int MAXN = 51;
 const int BIT = 50;
 
-long long arr[MAXN];
-long long basis[BIT + 1];
+ll arr[MAXN],basis[MAXN];
 int n;
 
-// 向线性基中插入一个数
-// 若成功插入返回 true，否则 false
-bool insert_basis(long long num) {
-    for (int i = BIT; i >= 0; i--) {
-        if ((num >> i) & 1LL) {   // 判断第 i 位是否为 1
-            if (!basis[i]) {
+void insert_basis(ll num){
+    for(int i = BIT; i >= 0; i--){
+        if((num>>i)&1LL){
+            if(!basis[i]){
                 basis[i] = num;
-                return true;
+                return;
             }
             num ^= basis[i];
         }
     }
-    return false;
+    
 }
 
-// 计算最大异或和
-long long compute() {
-    for (int i = 1; i <= n; i++) {
+ll compute(){
+    for(int i=1;i<=n;i++){
         insert_basis(arr[i]);
     }
-    long long ans = 0;
-    for (int i = BIT; i >= 0; i--) {
-        ans = max(ans, ans ^ basis[i]);
+    ll ans = 0;
+    for(int i=BIT;i>=0;i--){
+        ans = max(ans,ans^basis[i]);
     }
     return ans;
+    //return basis[BIT];
 }
 
-int main() {
+int main(){
     ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+    cin.tie(0);
 
-    cin >> n;
-    for (int i = 1; i <= n; i++) {
-        cin >> arr[i];
+    cin>>n;
+    for(int i=1;i<=n;i++){
+        cin>>arr[i];
     }
-
-    cout << compute() << "\n";
+    cout<<compute()<<"\n";
     return 0;
 }

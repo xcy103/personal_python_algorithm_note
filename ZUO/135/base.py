@@ -1,3 +1,8 @@
+# 2. 多个方程组成同余方程组
+# a11*x1 + a12*x2 + ... + a1n*xn ≡ b1 (mod m)
+# a21*x1 + a22*x2 + ... + a2n*xn ≡ b2 (mod m)
+# ...
+# am1*x1 + am2*x2 + ... + amn*xn ≡ bm (mod m)
 #高斯消元法求同余方程组，就是来到这一行，
 #如果元的系数不为0，就可以拿着这一行去消除其他行
 #消除的方法是，最小公倍数，记得乘的时候要取模
@@ -16,6 +21,7 @@ def gauss(mat,n,MOD):
     inv[1] = 1
     for i in range(2,MOD):
         inv[i] = (MOD - inv[MOD%i]*(MOD//i)%MOD)%MOD
+        
     
     for i in range(1,n+1):
         for j in range(1,n+1):

@@ -9,6 +9,7 @@
 # 如何找第k小，把k表示成2进制，哪一位上有1就异或上这一大小的线性基
 # 注意，普通消元得到的线性基，不能这么求，是不准的，只有高斯消元
 # 得到的线性基可以这么求
+# 线性基的个数如果和数组最大值的个数一样多，就是没有0的
 
 # 异或空间线性基
 # 包含：
@@ -78,7 +79,7 @@ def compute2(arr):
         povit = -1
         for i in range(row,n):
             if(basis2[i]>>bit)&1:
-                pivot = i
+                povit = i
                 break
         if povit == -1:
             continue
