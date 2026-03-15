@@ -1,3 +1,8 @@
+//这道题想到每个边减去一个二分值，判断有没有环之和大于0，来二分比较容易想到
+//但是到底该怎么判断负环不好象，左的做法是，定一个超级源点，也可以写一个循环来判断
+//开始dfs递归，来到一个点，标记为true，再看他的子节点，如果到子节点的边可以使得
+//子节点的累计点权边的更小，就走，不然就不走，如果来到一个点发现，这个点已经在路径上
+//或者从这个点出发，dfs返回true，就说明找到一个负环，check函数就要返回true
 #include <iostream>
 #include <cstdio>
 #include <cstring>
@@ -38,7 +43,7 @@ bool dfs(int u, double x){
     for(int e = head[u];e;e = nxt[e]){
         int v = to[e];
         double w = weight[e] - x;
-
+        //如果继续向下走，可以使得子节点累计边权变小，则继续往下走
         if(value[v] > value[u] + w){
             value[v] = value[u] + w;
             if(path[v] || dfs(v,x)){

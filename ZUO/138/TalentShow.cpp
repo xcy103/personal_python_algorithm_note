@@ -1,3 +1,4 @@
+//二分check的时候需要背包判断，判断w的时候，结余是不是非负
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -20,7 +21,7 @@ bool check(double x){
         for(int p=w;p>=0;p--){
             int j = p+weight[i];
             if(j>=w){
-                dp[w] = max(dp[w],dp[p]+value[i]);
+                dp[w] = max(dp[w],dp[p] + value[i]);
             }else{
                 dp[j] = max(dp[j],dp[p] + value[i]);
             }
@@ -44,7 +45,7 @@ int main(){
         r+=talent[i];
     }
     double ans = 0;
-    while(r-l>=sml){
+    while(l+sml<r){
         double mid = (l+r)/2;
         if(check(mid)){
             l=mid;

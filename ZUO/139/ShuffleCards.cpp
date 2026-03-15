@@ -45,7 +45,6 @@ ll power(ll a,ll b, ll mod){
     }
     return ans;
 }
-
 ll compute(ll n, ll m,ll l){
     ll mod = n+1;
     ll p = power(2,m,mod);
