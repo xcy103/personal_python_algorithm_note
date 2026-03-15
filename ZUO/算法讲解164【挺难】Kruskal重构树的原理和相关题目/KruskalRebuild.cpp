@@ -1,0 +1,130 @@
+//重构树模板题
+// **构建过程：**
+// 图中每个点作为重构树的叶节点，初始互不连通。按边权从小到大处理边，
+// 若一条边连接了两个不同连通块，则新建一个节点（权值为该边权）作为父节点，
+// 连接这两个连通块；若已连通则舍弃。处理完所有边后，每个原图连通块对应一棵重构树。
+// 随后对每棵树做 DFS，建立倍增表等信息。
+
+// **原理：**
+// 按边权从小到大构造的结构对应最小生成树（也是最小瓶颈树）。
+// 在重构树中，节点越往上代表使用的边权越大、连通块越大。
+// 任意两点 (x,y) 的 **LCA** 所对应的节点权值，就是它们连通时的 **最小瓶颈边权**。
+
+#include<bits/stdc++.h>
+using namespace std;
+
+struct Edge{
+    int u,v,w;
+};
+
+bool cmp(Edge x, Edge y){
+    return x.w<y.w;
+}
+
+const int MAXK = 200001;
+const int MAXM = 300001;
+const int MAXP = 20;
+
+int n,m,q;
+
+Edge edge[MAXM];
+
+int father[MAXK],head[MAXK],nxt[MAXK],to[MAXK];
+int cntg,nodeKey[MAXK],cntu;
+
+int deep[MAXK],stjump[MAXK][MAXP];
+
+int find(int i){
+    while(father[i]!=i){
+        father[i] = father[father[i]];
+        i = father[i];
+    }
+    return father[i];
+}
+
+void addEdge(int u,int v){
+    nxt[++cntg] = head[u];
+    to[cntg] = v;
+    head[u] = cntg;
+}
+
+void kruskalRebuild(){
+    for(int i=1;i<=n;i++){
+        father[i] = i;
+    }
+    sort(edge+1,edge+m+1,cmp);
+    cntu = n;
+    cntg = 1;
+    for(int i=1;i<=m;i++){
+        int fx = find(edge[i].u);
+        int fy = find(edge[i].v);
+        if(fx!=fy){
+            father[fx] = father[fy] = ++cntu;
+            father[cntu] = cntu;
+            nodeKey[cntu] = edge[i].w;
+            //注意，是从重构头向两个孩子连边
+            addEdge(cntu,fx);
+            addEdge(cntu,fy);
+        }
+    }
+}
+
+void dfs(int u,int fa){
+    deep[u] = deep[fa] + 1;
+    stjump[u][0] = fa;
+    for(int p=1;p<MAXP;p++){
+        stjump[u][p] = stjump[stjump[u][p-1]][p-1];
+    }
+    for(int e=head[u];e;e = nxt[e]){
+        dfs(to[e],u);
+    }
+}
+
+int lca(int a,int b){
+    if(deep[a] < deep[b]){
+        int tmp = a;
+        a = b;
+        b = tmp;
+    }
+    for(int p=MAXP-1;p>=0;p--){
+        if(deep[stjump[a][p]]>=deep[b]){
+            a = stjump[a][p];
+        }
+    }
+    if(a==b) return a;
+
+    for(int p=MAXP-1;p>=0;p--){
+        if(stjump[a][p]!=stjump[b][p]){
+            a = stjump[a][p];
+            b = stjump[b][p];
+        }
+    }
+    return stjump[a][0];
+}
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cin>>n>>m;
+
+    for(int i=1;i<=m;i++){
+        cin >> edge[i].u >> edge[i].v >> edge[i].w;
+    }
+    kruskalRebuild();
+    for(int i=1;i<=cntu;i++){
+        if(i==father[i]){
+            dfs(i,0);
+        }
+    }
+    cin>>q;
+    for(int i=1,x,y;i<=q;i++){
+        cin>>x>>y;
+        if(find(x)!=find(y)){
+            cout<<"impossible"<<"\n";
+        }else{
+            cout<<nodeKey[lca(x,y)]<<"\n";
+        }
+    }
+    return 0;
+}
+
