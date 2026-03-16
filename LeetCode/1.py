@@ -1,17 +1,21 @@
-nums =[3,1,6,8,4]
-target = 24
-s = sum(nums)
-if s!=2*target:
-    print(False)
-
-n = len(nums)
-mask = 1<<n
-
-for state in range(1,mask-1):
-    tmp = 0
-    for j in range(n):
-        if state>>j&1:
-            tmp+=nums[j]
-    if tmp==target:
-        print(True)
-print(False)
+from collections import Counter
+mp = set()
+for i in range(15*9+1):
+    s = list(str(i))
+    n = len(s)
+    if n==1: mp.add(i)
+    else:
+        if n==2:
+            s0 = s[0]
+            s1 = s[1]
+            if s0<s1 or s1<s0:
+                mp.add(i)
+        else:
+            s0 = s[0]
+            s1 = s[1]
+            s2 = s[2]
+            if s0<s1<s2 or s0>s1>s2:
+                mp.add(i)
+                
+print(mp)
+            
