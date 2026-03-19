@@ -30,3 +30,31 @@
 // )
 #include<bits/stdc++.h>
 using namespace std;
+
+const int MAXM = 101;
+const int MAXT = 1001;
+
+int cost[MAXM],val[MAXM],dp[MAXT];
+int t,n;
+
+//这里的空间压缩，选择了从右向左更新，和dp的依赖有关
+int compute2(){
+    memset(dp,0,sizeof(dp));
+    for(int i=1;i<=n;i++){
+        for(int j=t;j>=cost[i];j--){
+            dp[j] = max(dp[j],dp[j-cost[i]] + val[i]);
+        }
+        return dp[t];
+    }
+}
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    while(cin>>t>>n){
+        for(int i=1;i<=n;i++){
+            cin>>cost[i]>>val[i];
+        }
+        cout<<compute2()<<"\n";
+    }
+    return 0;
+}
