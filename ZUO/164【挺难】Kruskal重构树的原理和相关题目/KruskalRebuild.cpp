@@ -10,6 +10,15 @@
 // 在重构树中，节点越往上代表使用的边权越大、连通块越大。
 // 任意两点 (x,y) 的 **LCA** 所对应的节点权值，就是它们连通时的 **最小瓶颈边权**。
 
+// Kruskal重构树模版题，C++版
+// 图里有n个点，m条无向边，每条边给定边权，图里可能有若干个连通的部分
+// 一共有q条查询，每条查询都是如下的格式
+// 查询 x y : 点x和点y希望连通起来，其中的最大边权希望尽量小，打印这个值
+//            如果怎样都无法联通，打印"impossible"
+// 1 <= n <= 10^5
+// 1 <= m <= 3 * 10^5
+// 1 <= q <= 10^5
+// 测试链接 : https://www.luogu.com.cn/problem/P2245
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -54,7 +63,6 @@ void kruskalRebuild(){
     }
     sort(edge+1,edge+m+1,cmp);
     cntu = n;
-    cntg = 1;
     for(int i=1;i<=m;i++){
         int fx = find(edge[i].u);
         int fy = find(edge[i].v);
