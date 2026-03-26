@@ -6,7 +6,7 @@
 // 可以选择数组的任何子序列并对其元素求和
 // 希望找到第k大的子序列和，子序列和允许出现重复
 // 空子序列的和视作0，数组中的值可正、可负、可0
-// 测试链接 : https://leetcode.cn/problems/find-the-k-sum-of-an-array/description/
+// 测试链接 : https://leetcode.com/problems/find-the-k-sum-of-an-array/description/
 //
 // 转化逻辑如下 : 
 // 1，先把所有正数加起来，得到sum，这是nums第1大子序列和
