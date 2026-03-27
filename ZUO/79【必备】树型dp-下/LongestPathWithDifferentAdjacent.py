@@ -8,4 +8,25 @@
 #  请你找出路径上任意一对相邻节点都没有分配到相同字符的 最长路径
 #  并返回该路径的长度
 #  测试链接 : https://leetcode.com/problems/longest-path-with-different-adjacent-characters/
-
+# 整体思路就是，选取经过a的最长链，当然可能也不经过a，但是我们的情况包含了
+# 不经过a，但是肯定经过某一个节点，但是我们还是收集答案了
+class Solution:
+    def longestPath(self, p: List[int], s: str) -> int:
+        n = len(p)
+        g = [[] for _ in range(n)]
+        for i in range(1,n):
+            g[p[i]].append(i)
+        if n==1:
+            return 1
+        ans = 0
+        def f(a):
+            nonlocal ans
+            x = 0
+            for b in g[a]:
+                y = f(b)
+                if s[a]!=s[b]:
+                    ans = max(x+y,ans)
+                    x = max(x,y)
+            return x+1
+        f(0)
+        return ans+1
