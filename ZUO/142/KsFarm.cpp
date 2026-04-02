@@ -15,7 +15,6 @@ int q[MAXQ],h,t;
 int n,m;
 
 void prepare(){
-    cnt = 1;
     h = t = 0;
     memset(head,0,sizeof(head));
     for(int i=0;i<=n;i++){
@@ -26,10 +25,10 @@ void prepare(){
 }
 
 void add_edge(int u,int v,int w){
-    nxt[cnt] = head[u];
+    nxt[++cnt] = head[u];
     to[cnt] = v;
     weight[cnt] = w;
-    head[u] = cnt++;
+    head[u] = cnt;
 }
 bool spfa(int s){
     dist[s] = 0;
@@ -53,7 +52,7 @@ bool spfa(int s){
             //         enter[v] = true;
             //     }
             // }
-            //写在外面可以优化常数时间
+            //写在外面可以优化常数时间,不能这么写
             if(dist[v] > dist[u] + w){
                 dist[v] = dist[u] + w;
                 if(++update[v] > n){
