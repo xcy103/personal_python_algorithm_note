@@ -1,0 +1,14 @@
+.idea/
+.vscode/
+.venv/
+
+__pycache__/
+*.pyc
+
+*.class
+target/
+out/
+
+*.log
+.DS_Store
+Thumbs.db
