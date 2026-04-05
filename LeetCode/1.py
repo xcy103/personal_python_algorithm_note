@@ -1,27 +1,40 @@
+from math import inf
 from functools import cache
-from functools import lru_cache
-class Solution:
-    def longestPalindromicSubsequence(self, s: str, k: int) -> int:
-        n = len(s)
-        s = list(s)
+def minOperations(nums, k: int) -> int:
+        if k==0:
+            return 0
+        if k>len(nums)//2:
+            return -1
+        n = len(nums)+2
+        nums = [nums[-1]]+nums+[nums[0]]
         @cache
-        def f(l,r,op):
-            if l==r:
-                return 1
-            if l+1==r:
-                if op==0:
-                    return 2 if s[l]==s[r] else 1
-                return 2 if min(abs(ord(s[l])-ord(s[r])),26-abs(ord(s[l])-ord(s[r])))<=op  else 1
-            if s[l]==s[r]:
-                return f(l+1,r-1,op)+2
+        def f(i,pre,left,t):
+            if left==0:
+                return 0
+            if i==n-1:
+                return inf
+            if i==n-3:
+                if left>1:
+                    return inf
+                return min(max(0,max(t[i-1],t[i+1])-t[i]+1),max(0,max(t[i],t[i+2])-t[i+1]+1))
+            if i==n-2:
+                if left>1:
+                    return inf
+                return max(0,max(t[i-1],t[i+1])-t[i]+1) if left==1 else 0
+            ans = f(i+2,pre,left,t)
+            if pre:
+                c1 = f(i+2,1,left-1,t)+max(0,max(t[i-1],t[i+1])-t[i]+1)
+                c2 = f(i+3,0,left-1,t)+max(0,max(t[i],t[i+2])-t[i+1]+1)
+                return min(c1,c2,ans)
             else:
-                p1 = max(f(l+1,r,op),f(l,r-1,op))
-                if op>0:
-                    if min(abs(ord(s[l])-ord(s[r])),26-abs(ord(s[l])-ord(s[r])))<=op:
-                        t =  min(abs(ord(s[l])-ord(s[r])),26-abs(ord(s[l])-ord(s[r])))
-                        p1 = max(p1,f(l+1,r-1,op-t)+2)
-                return p1
-        ans = f(0,n-1,k)
-        f.clear_cache()
-        return ans
-            
+                return min(ans,f(i+2,0,left-1,t)+max(0,max(t[i-1],t[i+1])-t[i]+1))
+        a1 = f(1,1,k,tuple(nums))
+        f.cache_clear()
+        a2 = f(2,0,k,tuple(nums))
+        aa2 = min(a1,a2)
+        #aa3 = ans if ans!=inf else -1
+        #ans = min(aa1,aa2)
+        return -1 if aa2==inf else aa2
+minOperations([6,-7,11,13],2)
+    
+                        
