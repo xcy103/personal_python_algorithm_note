@@ -1,0 +1,38 @@
+# 在这道题中超时的根本原因是对障碍物的查找方式使用了低效的数据结构。
+# 代码中将 obstacles 转成了 tuple，但仍然是一个顺序结构（本质类似 list），
+# 每次判断 [x, y] in t 时都会进行线性扫描，时间复杂度是 O(n)。
+# 而机器人在最坏情况下最多会移动约 9×10⁴ 步，每一步都进行一次 O(n) 查找（n 最大为 10⁴）
+# ，整体复杂度接近 O(10⁹)，因此必然超时。
+# 正确的做法是使用哈希结构（set）来存储障碍物，将每个坐标转成 tuple 后放入 set 中，
+# 这样每次判断 (x, y) in obstacles 的时间复杂度为 O(1)，整体复杂度降为 O(总步数)，
+# 可以顺利通过。
+
+# 关键优化点就是：涉及“频繁查找某元素是否存在”时，
+# 优先使用 set 或 dict，而不是 list 或 tuple。
+from bisect import bisect_left
+commands = [4,-1,4,-2,4]
+obstacles = [[2,4]]
+def robotSim(cc, t) -> int:
+        d = [[0,1],[1,0],[0,-1],[-1,0]]
+        ans = 0
+        t = tuple(t)
+        print(t)
+        i = 0
+        x = 0
+        y = 0
+        for c in cc:
+            if c==-2:
+                i = (i-1)%4
+            elif c==-1:
+                i = (i+1)%4
+            else:
+                for l in range(c):
+                    x += d[i][0]
+                    y += d[i][1]
+                    if [x,y] in t:#错误的
+                        x-=d[i][0]
+                        y-=d[i][1]
+                        break
+                    ans = max(ans,x*x+y*y)
+        return ans
+robotSim(commands, obstacles)
