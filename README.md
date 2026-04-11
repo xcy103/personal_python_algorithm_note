@@ -1,5 +1,10 @@
 ## Competitive Programming Knowledge Outline
 
+牛客
+leetcode
+codeforece div3/div4
+Atcoder awc/abc
+
 ~~### Fundamental Stage (Difficulty 1–3)~~
 
 * ~~**Enumeration & Simulation**: Basic enumeration, simulation logic implementation~~  
