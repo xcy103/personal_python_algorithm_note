@@ -1,3 +1,11 @@
+#  种草的方法数(轮廓线dp+空间压缩)
+#  给定一个n*m的二维网格grid
+#  网格里只有0、1两种值，0表示该田地不能种草，1表示该田地可以种草
+#  种草的时候，任何两个种了草的田地不能相邻，相邻包括上、下、左、右四个方向
+#  你可以随意决定种多少草，只要不破坏上面的规则即可
+#  返回种草的方法数，答案对100000000取模
+#  1 <= n, m <= 12
+#  测试链接 : https://www.luogu.com.cn/problem/P1879
 import sys
 from functools import lru_cache
 
@@ -6,7 +14,8 @@ MOD = 100000000
 
 n, m = map(int, sys.stdin.readline().split())
 grid = [list(map(int, sys.stdin.readline().split())) for _ in range(n)]
-
+#i,j 当前来到第i行第j列
+#s 轮廓线状态，长度为m的二进制数，s
 @lru_cache(None)
 def f(i,j,s):
     if i==n:
