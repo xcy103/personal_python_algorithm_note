@@ -1,27 +1,48 @@
-from bisect import bisect_right
-from itertools import accumulate
-def kthRemainingInteger(nums: list[int], queries: list[list[int]]) -> list[int]:
-    n = len(nums)
-    #其实就是查询区间l,r对应在nums里面，
-    #有多少个小于等于2*k的偶数
-    arr = []
-    for x in nums:
-        arr.append(1 if x%2==0 else 0)
+from math import inf
+def countSubgraphsForEachDiameter(n: int, edges):
+    bit = 1 << n
+    res = [0] * n
 
-    pre = [0] + list(accumulate(arr))
-    
-    def f(mid,l,r):
-        idx = bisect_right(arr,2*(k+mid),l,r)
-        return pre[idx]-pre[l]>=mid
-        
-    res = [0]*len(queries)
-    for i,[l,r,k] in enumerate(queries):
-        tl = -1
-        tr = n
-        while tl+1<tr:
-            mid = (tl+tr)//2
-            if f(mid,l,r+1): tr = mid
-            else: tl = mid
-        res[i] = 2*(k+tr)
-    return res
-kthRemainingInteger([4,6,22,24],[[0,2,10],[0,3,13]])
+    def f(mask):
+        g = [[inf] * n for _ in range(n)]
+        for a, b in edges:
+            a -= 1
+            b -= 1
+            if (mask & (1 << a)) and (mask & (1 << b)):
+                g[a][b] = 1
+                g[b][a] = 1
+
+        idx = []
+        for i in range(n):
+            if mask & (1 << i):
+                g[i][i] = 0
+                idx.append(i)
+
+        # floyd
+        for k in idx:
+            for a in idx:
+                for b in idx:
+                    g[a][b] = min(g[a][k] + g[k][b], g[a][b])
+
+        d = -1
+        num = 0
+        for a in idx:
+            for b in idx:
+                if a==b:continue
+                if g[a][b] == inf:
+                    return inf, 0
+                if g[a][b] > d:
+                    d = g[a][b]
+                    num = 1
+                elif g[a][b] == d:
+                    num += 1
+
+        return d, num//2
+    for mask in range(1,bit):
+        if (mask&(mask-1))==0:continue
+        #找到子集了，开始dij
+        d,num = f(mask)
+        if d==inf:continue
+        res[d] += num
+    print(res)
+countSubgraphsForEachDiameter(4,[[1,2],[2,3],[2,4]])
